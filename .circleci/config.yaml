@@ -1,0 +1,76 @@
+version: '2.1'
+orbs:
+  node: circleci/node@5.1.0
+  gh: circleci/github-cli@2.0
+
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          command: npm install
+      - run:
+          command: npm run test
+      - store_artifacts:
+          path: dist
+      - store_artifacts:
+          path: junit
+      - store_test_results:
+          path: junit
+  publish:
+    executor:
+      name: node/default
+    steps:
+      - run:
+            command:
+              export VERSION=$(node -p "require('./package.json').version")
+#      - run:
+#          name: Publish to NPM
+#          command: |
+#            npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+#            npm publish
+#  publish-github-release:
+#    docker:
+#      - image: cibuilds/github:0.10
+#    steps:
+#      - attach_workspace:
+#          at: ./artifacts
+#      - run:
+#          name: "Publish Release on GitHub"
+#          command: |
+#            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} 1234 ./artifacts/
+
+workflows:
+  build-test-publish:
+    jobs:
+      - build-and-test
+      - gh/release:
+            context:
+              - GITHUB_CREDS
+            filters:
+              branches:
+                only:
+                  - main
+            notes-file: changelog.md
+            requires:
+              - build-and-test
+            tag: 1.0.0
+            title: The initial release 2
+#      - publish:
+#          requires:
+#            - build-and-test
+#          filters:
+#              branches:
+#                only:
+#                  - main
+#      - publish-github-release:
+#          requires:
+#            - publish
+#          filters:
+#            branches:
+#              only:
+#                - main
+#            tags:
+#              only: /^\d+\.\d+\.\d+$/
