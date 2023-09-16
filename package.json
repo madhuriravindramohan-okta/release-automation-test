@@ -1,0 +1,35 @@
+{
+  "name": "legendary-tribble",
+  "version": "1.2",
+  "description": "A basic npm library",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madhuriravindramohan-okta/legendary-tribble.git"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "madhuri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madhuriravindramohan-okta/legendary-tribble/issues"
+  },
+  "homepage": "https://github.com/madhuriravindramohan-okta/legendary-tribble#readme",
+  "devDependencies": {
+    "mocha": "^10.2.0"
+  },
+  "dependencies": {
+    "assert": "^2.0.0",
+    "circleci": "^0.3.3",
+    "express": "^4.18.2",
+    "should": "^13.2.3",
+    "supertest": "^6.3.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
