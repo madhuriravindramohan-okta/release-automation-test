@@ -46,6 +46,7 @@ workflows:
   build-test-publish:
     jobs:
       - build-and-test
+      - checkout
       - gh/release:
             context:
               - GITHUB_CREDS
