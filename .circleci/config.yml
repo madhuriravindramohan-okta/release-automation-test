@@ -32,6 +32,7 @@ jobs:
           command: |
             npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
             npm publish
+
 #  publish-github-release:
 #    docker:
 #      - image: cibuilds/github:0.10
@@ -47,18 +48,6 @@ workflows:
   build-test-publish:
     jobs:
       - build-and-test
-#      - gh/release:
-#            context:
-#              - GITHUB_CREDS
-#            filters:
-#              branches:
-#                only:
-#                  - main
-#            notes-file: changelog.md
-#            requires:
-#              - build-and-test
-#            tag: 1.0.0
-#            title: The initial release 2.0.1
       - publish:
           requires:
             - build-and-test
@@ -66,12 +55,13 @@ workflows:
               branches:
                 only:
                   - main
-#      - publish-github-release:
-#          requires:
-#            - publish
-#          filters:
-#            branches:
-#              only:
-#                - main
-#            tags:
-#              only: /^\d+\.\d+\.\d+$/
+      - gh/release:
+          context:
+            - GITHUB_CREDS
+          filters:
+            branches:
+              only:
+                - main
+          notes-file: changelog.md
+          tag: 1.0.0
+          title: The initial release 2.0.1
