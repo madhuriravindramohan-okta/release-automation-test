@@ -23,14 +23,15 @@ jobs:
     executor:
       name: node/default
     steps:
+      - checkout
       - run:
             command:
               export VERSION=$(node -p "require('./package.json').version")
-#      - run:
-#          name: Publish to NPM
-#          command: |
-#            npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-#            npm publish
+      - run:
+          name: Publish to NPM
+          command: |
+            npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+            npm publish
 #  publish-github-release:
 #    docker:
 #      - image: cibuilds/github:0.10
@@ -46,26 +47,25 @@ workflows:
   build-test-publish:
     jobs:
       - build-and-test
-      - checkout
-      - gh/release:
-            context:
-              - GITHUB_CREDS
-            filters:
-              branches:
-                only:
-                  - main
-            notes-file: changelog.md
-            requires:
-              - build-and-test
-            tag: 1.0.0
-            title: The initial release 2.0.1
-#      - publish:
-#          requires:
-#            - build-and-test
-#          filters:
+#      - gh/release:
+#            context:
+#              - GITHUB_CREDS
+#            filters:
 #              branches:
 #                only:
 #                  - main
+#            notes-file: changelog.md
+#            requires:
+#              - build-and-test
+#            tag: 1.0.0
+#            title: The initial release 2.0.1
+      - publish:
+          requires:
+            - build-and-test
+          filters:
+              branches:
+                only:
+                  - main
 #      - publish-github-release:
 #          requires:
 #            - publish
