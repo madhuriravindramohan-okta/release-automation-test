@@ -21,7 +21,7 @@ describe('Testing get endpoint', () => {
                 .get('/bye')
                 .expect(200)
                 .end(function (err, res) {
-                    res.text.should.eql('See you soon!');
+                    res.text.should.eql('See you again!');
                     done();
                 });
         })

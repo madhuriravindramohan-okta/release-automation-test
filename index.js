@@ -9,7 +9,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/bye', (req, res) => {
-    res.send('See you soon!');
+    res.send('See you again!');
 });
 
 
