@@ -1,6 +1,6 @@
 {
   "name": "legendary-tribble",
-  "version": "1.2.0",
+  "version": "2.1.0",
   "description": "A basic npm library",
   "main": "index.js",
   "scripts": {
