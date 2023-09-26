@@ -5,7 +5,7 @@ name: Node.js Package
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   build:
@@ -18,8 +18,15 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  main-branch-check:
+    needs: build-and-test
+    if: ${{ github.repository == 'madhuriravindramohan-okta/release-automation-test' }} && ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Publishing package to NPM"
+
   publish-npm:
-    needs: build
+    needs: main-branch-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
