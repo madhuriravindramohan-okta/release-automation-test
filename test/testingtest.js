@@ -9,7 +9,7 @@ describe('Testing get endpoint', () => {
           .get('/hello')
           .expect(200)
           .end(function (err, res) {
-            res.text.should.eql('Hello World!');
+            res.text.should.eql('Hi World!');
             done();
           });
     })

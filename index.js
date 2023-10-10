@@ -5,7 +5,7 @@ app.use(express.json());
 
 
 app.get('/hello', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hi World!');
 });
 
 app.get('/bye', (req, res) => {
